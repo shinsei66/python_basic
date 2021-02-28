@@ -1,9 +1,9 @@
 import sqlalchemy as sa
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.sql.functions import count
-from 
+from sqlalchemy.orm import sessionmaker
 
-conn = sa.create_engine('sqlite:///zoo.db')
+conn = sa.create_engine('sqlite:///python_basic/zoo.db')
 
 Base = declarative_base()
 class Zoo(Base):
@@ -27,3 +27,15 @@ if __name__ == '__main__':
     second = Zoo('bear', 2, 1000.0)
     third = Zoo('weasel', 1, 2000.0)
     print(first)
+    Session = sessionmaker(bind=conn)
+    session = Session()
+    session.add(first)
+    session.add_all([second, third])
+    session.commit()
+"""
+    >> cd python_basic
+    >> sqlite3 zoo.declarative_base
+    >> .tables
+    >> select * from zoo;
+"""
+
